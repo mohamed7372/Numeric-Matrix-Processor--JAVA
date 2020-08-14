@@ -11,11 +11,8 @@ public class Main {
 		int m1 = sc.nextInt();
 		Matrix mat1 = new Matrix(n1, m1, fillMat(n1, m1));
 		
-		int n2 = sc.nextInt();
-		int m2 = sc.nextInt();
-		Matrix mat2 = new Matrix(n2, m2, fillMat(n2, m2));
-
-		mat1.som(mat2);
+		int nbr = sc.nextInt();
+		mat1.mult(nbr);
 	}
 	
 	static int[][] fillMat(int n, int m) {
@@ -57,5 +54,16 @@ class Matrix{
 		}
 		System.out.println("ERROR");
 		return null;
+	}
+	int[][] mult(int nbr) {
+		int[][] s = new int[n][m];
+		for (int i = 0; i < n; i++) {
+			for (int j = 0; j < m; j++) {
+				s[i][j] = this.arr[i][j] * nbr;
+				System.out.print(s[i][j] + " ");
+			}
+			System.out.println();
+		}
+		return s;
 	}
 }
