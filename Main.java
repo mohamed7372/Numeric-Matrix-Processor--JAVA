@@ -24,6 +24,11 @@ public class Main {
 				multMat();
 				System.out.println();
 				break;
+			case 4:
+				subMenu();
+				transposition();
+				System.out.println();
+				break;
 			case 0:
 				loop = false;
 				break;
@@ -37,7 +42,15 @@ public class Main {
 		System.out.println("1. Add matrices");
 		System.out.println("2. Multiply matrix to a constant");
 		System.out.println("3. Multiply matrices");
+		System.out.println("4. Transpose matrix");
 		System.out.println("0. Exit");
+		System.out.print("Your choice: ");
+	}
+	static void subMenu() {
+		System.out.println("1. Main diagonal");
+		System.out.println("2. Side diagonal");
+		System.out.println("3. Vertical line");
+		System.out.println("4. Horizontal line");
 		System.out.print("Your choice: ");
 	}
 	static void addMat() {
@@ -94,6 +107,33 @@ public class Main {
 		}
 		return arr;
 	}
+	static void transposition() {
+		int choice = sc.nextInt();
+		System.out.print("Enter matrix size: ");
+		int n1 = sc.nextInt();
+		int m1 = sc.nextInt();
+		System.out.println("Enter matrix: ");
+		Matrix mat1 = new Matrix(n1, m1, fillMat(n1, m1));
+		
+		System.out.println("The result is: ");
+		switch (choice) {
+		case 1: 
+			mat1.transposeMainDiag();
+			break;
+		case 2: 
+			mat1.transposeSideDiag();
+			break;
+		case 3: 
+			mat1.transposeVer();
+			break;
+		case 4: 
+			mat1.transposeHor();
+			break;
+		default:
+			System.out.println("ERROR");
+		}
+	}
+	
 }
 
 class Matrix{
@@ -154,5 +194,50 @@ class Matrix{
 		}
 		System.out.println("ERROR");
 		return null;
+	}
+	void transposeMainDiag() {
+		double[][] tra = new double[this.n][this.m];
+		for (int i = 0; i < this.n; i++) {
+			for (int j = 0; j < this.m; j++) {
+				tra[j][i] = this.arr[i][j];
+			}
+		}
+		printArr(tra);
+	}
+	void transposeSideDiag() {
+		double[][] tra = new double[this.n][this.m];
+		for (int i = 0; i < this.n; i++) {
+			for (int j = 0; j < this.m; j++) {
+				tra[i][j] = this.arr[this.m - 1 - j][this.n - 1 - i];
+			}
+		}
+		printArr(tra);
+	}
+	void transposeVer() {
+		double[][] tra = new double[this.n][this.m];
+		for (int i = 0; i < this.n; i++) {
+			for (int j = 0; j < this.m; j++) {
+				tra[i][this.m - 1 -j] = this.arr[i][j];
+			}
+		}
+		printArr(tra);
+	}
+	void transposeHor() {
+		double[][] tra = new double[this.n][this.m];
+		for (int i = 0; i < this.n; i++) {
+			for (int j = 0; j < this.m; j++) {
+				tra[this.n - 1 -i][j] = this.arr[i][j];
+			}
+		}
+		printArr(tra);
+	}
+	
+	private void printArr(double[][] mat) {
+		for (int i = 0; i < mat.length; i++) {
+			for (int j = 0; j < mat[i].length; j++) {
+				System.out.print(mat[i][j] + " ");
+			}
+			System.out.println();
+		}
 	}
 }
