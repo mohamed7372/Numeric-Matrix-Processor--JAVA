@@ -29,6 +29,10 @@ public class Main {
 				transposition();
 				System.out.println();
 				break;
+			case 5:
+				det();
+				System.out.println();
+				break;
 			case 0:
 				loop = false;
 				break;
@@ -43,6 +47,7 @@ public class Main {
 		System.out.println("2. Multiply matrix to a constant");
 		System.out.println("3. Multiply matrices");
 		System.out.println("4. Transpose matrix");
+		System.out.println("5. Calculate a determinant");
 		System.out.println("0. Exit");
 		System.out.print("Your choice: ");
 	}
@@ -133,7 +138,15 @@ public class Main {
 			System.out.println("ERROR");
 		}
 	}
-	
+	static void det() {
+		System.out.print("Enter matrix size: ");
+		int n1 = sc.nextInt();
+		int m1 = sc.nextInt();
+		System.out.println("Enter matrix: ");
+		Matrix mat1 = new Matrix(n1, m1, fillMat(n1, m1));
+		
+		System.out.println("The result is: " + mat1.matrixDeterminant(mat1.arr));
+	}
 }
 
 class Matrix{
@@ -231,7 +244,38 @@ class Matrix{
 		}
 		printArr(tra);
 	}
-	
+	double matrixDeterminant (double[][] matrix) {
+		double temporary[][];
+		double result = 0;
+
+		if (matrix.length == 1) {
+			result = matrix[0][0];
+			return (result);
+		}
+
+		if (matrix.length == 2) {
+			result = ((matrix[0][0] * matrix[1][1]) - (matrix[0][1] * matrix[1][0]));
+			return (result);
+		}
+
+		for (int i = 0; i < matrix[0].length; i++) {
+			temporary = new double[matrix.length - 1][matrix[0].length - 1];
+
+			for (int j = 1; j < matrix.length; j++) {
+				for (int k = 0; k < matrix[0].length; k++) {
+					if (k < i) {
+						temporary[j - 1][k] = matrix[j][k];
+					} else if (k > i) {
+						temporary[j - 1][k - 1] = matrix[j][k];
+					}
+				}
+			}
+
+			result += matrix[0][i] * Math.pow (-1, (double) i) * matrixDeterminant (temporary);
+		}
+		return (result);
+	}
+
 	private void printArr(double[][] mat) {
 		for (int i = 0; i < mat.length; i++) {
 			for (int j = 0; j < mat[i].length; j++) {
